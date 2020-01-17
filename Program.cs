@@ -12,7 +12,7 @@ namespace MSSQLProject
         static readonly string ConnectionString = "Data source=(local);Initial Catalog = MSSQLProject;Integrated Security=SSPI";
         static void Main(string[] args)
         {
-            //Hele er i en While loop så den kan komme tilbage til start menuen efter den har kørt funktionen
+            //Det hele er i en While loop så den kan komme tilbage til start menuen efter den har kørt den valgte funktion
             while (true)
             { 
                 int chosen;
