@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
 using System.Data;
 
@@ -12,6 +12,7 @@ namespace MSSQLProject
         static readonly string ConnectionString = "Data source=(local);Initial Catalog = MSSQLProject;Integrated Security=SSPI";
         static void Main(string[] args)
         {
+            //Hele er i en While loop så den kan komme tilbage til start menuen efter den har kørt funktionen
             while (true)
             { 
                 int chosen;
@@ -105,7 +106,7 @@ namespace MSSQLProject
 
             SqlConnection servConn = new SqlConnection(ConnectionString);
             //Query som kan læses af SQL serveren
-            string query = "INSERT INTO Library(NAME, AUTHOR, DOR, GENRE)"+
+            string query = "INSERT INTO " + tableName + "(NAME, AUTHOR, DOR, GENRE)"+
             " VALUES(@NAME, @AUTHOR, @DOR, @GENRE)";
 
             SqlCommand cmd = new SqlCommand(query, servConn);
@@ -146,12 +147,12 @@ namespace MSSQLProject
             Console.Write("\nChoose the ID of the book that you want to Delete: ");
             ID = Convert.ToInt32(Console.ReadLine());
 
-            string query = "DELETE FROM Library WHERE Id = ";
+            string query = "DELETE FROM " + tableName + " WHERE Id = " + ID;
 
             SqlConnection servConn = new SqlConnection(ConnectionString);
             try
             {
-                using SqlCommand cmd = new SqlCommand(query + ID, servConn);
+                using SqlCommand cmd = new SqlCommand(query, servConn);
                 servConn.Open();
                 cmd.ExecuteNonQuery();
                 servConn.Close();
@@ -195,7 +196,7 @@ namespace MSSQLProject
                 Console.Write("New Genre: ");
                 GENRE = Console.ReadLine();
 
-                string query = "UPDATE Library SET NAME = @NAME, AUTHOR = @AUTHOR, DOR = @DOR, GENRE = @GENRE WHERE Id =" + ID.ToString();
+                string query = "UPDATE " + tableName + " SET NAME = @NAME, AUTHOR = @AUTHOR, DOR = @DOR, GENRE = @GENRE WHERE Id =" + ID.ToString();
                 try
                 {
                     using SqlCommand cmd = new SqlCommand(query, servConn);
@@ -210,10 +211,12 @@ namespace MSSQLProject
                     cmd.Parameters["@GENRE"].Value = GENRE;
 
                     servConn.Open();
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
                     servConn.Close();
 
                     Console.Clear();
+                    Console.WriteLine(affected.ToString() + " Book Has Been Updated!");
+
 
                 }
                 catch (SqlException ex)
@@ -232,7 +235,7 @@ namespace MSSQLProject
                 Console.Write("New Book Name: ");
                 NAME = Console.ReadLine();
 
-                string query = "UPDATE Library SET NAME = @NAME WHERE Id =" + ID.ToString();
+                string query = "UPDATE " + tableName + " SET NAME = @NAME WHERE Id =" + ID.ToString();
                 try
                 {
                     using SqlCommand cmd = new SqlCommand(query, servConn);
@@ -241,10 +244,11 @@ namespace MSSQLProject
                     cmd.Parameters["@NAME"].Value = NAME;
 
                     servConn.Open();
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
                     servConn.Close();
 
                     Console.Clear();
+                    Console.WriteLine(affected.ToString() + " Book Has Been Updated!");
                 }
                 catch (SqlException ex)
                 {
@@ -258,7 +262,7 @@ namespace MSSQLProject
                 Console.Write("New Author Name: ");
                 AUTHOR = Console.ReadLine();
 
-                string query = "UPDATE Library SET AUTHOR = @AUTHOR WHERE Id =" + ID.ToString();
+                string query = "UPDATE " + tableName + " SET AUTHOR = @AUTHOR WHERE Id =" + ID.ToString();
                 try
                 {
                     using SqlCommand cmd = new SqlCommand(query, servConn);
@@ -267,11 +271,11 @@ namespace MSSQLProject
                     cmd.Parameters["@AUTHOR"].Value = AUTHOR;
 
                     servConn.Open();
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
                     servConn.Close();
 
                     Console.Clear();
-
+                    Console.WriteLine(affected.ToString() + " Book Has Been Updated!");
                 }
                 catch (SqlException ex)
                 {
@@ -286,7 +290,7 @@ namespace MSSQLProject
                 Console.Write("New Date Of Release: ");
                 DOR = Console.ReadLine();
 
-                string query = "UPDATE Library SET DOR = @DOR WHERE Id =" + ID.ToString();
+                string query = "UPDATE " + tableName + " SET DOR = @DOR WHERE Id =" + ID.ToString();
                 try
                 {
                     using SqlCommand cmd = new SqlCommand(query, servConn);
@@ -294,11 +298,11 @@ namespace MSSQLProject
                     cmd.Parameters["@DOR"].Value = DOR;
 
                     servConn.Open();
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
                     servConn.Close();
 
                     Console.Clear();
-
+                    Console.WriteLine(affected.ToString() + " Book Has Been Updated!");
                 }
                 catch (SqlException ex)
                 {
@@ -312,7 +316,7 @@ namespace MSSQLProject
                 Console.Write("New Genre: ");
                 GENRE = Console.ReadLine();
 
-                string query = "UPDATE Library SET NAME = @NAME, AUTHOR = @AUTHOR, DOR = @DOR, GENRE = @GENRE WHERE Id =" + ID.ToString();
+                string query = "UPDATE " + tableName + " SET GENRE = @GENRE WHERE Id =" + ID.ToString();
                 try
                 {
                     using SqlCommand cmd = new SqlCommand(query, servConn);
@@ -320,11 +324,11 @@ namespace MSSQLProject
                     cmd.Parameters["@GENRE"].Value = GENRE;
 
                     servConn.Open();
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
                     servConn.Close();
 
                     Console.Clear();
-
+                    Console.WriteLine(affected.ToString() + " Book Has Been Updated!");
                 }
                 catch (SqlException ex)
                 {
